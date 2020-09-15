@@ -5,6 +5,7 @@ import { campsites } from './campsitesReducer';
 import { comments } from './commentsReducer';
 import { partners } from "./partnersReducer";
 import { promotions } from "./promotionsReducer";
+import { favorites } from "./favoritesReducer";
 
 export const ConfigureStore = () => {
     const store = createStore(
@@ -12,7 +13,8 @@ export const ConfigureStore = () => {
             campsites: campsites,
             partners: partners,
             comments: comments,
-            promotions: promotions
+            promotions: promotions,
+            favorites: favorites            
         }),
         applyMiddleware(thunk, logger)
     );
