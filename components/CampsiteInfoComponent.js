@@ -3,7 +3,7 @@ import { Text, View, ScrollView, FlatList, Modal, Button, StyleSheet, Platform }
 import { Card, Icon, Input, Rating } from "react-native-elements";
 import { baseUrl } from "../shared/baseUrl";
 import { connect } from "react-redux";
-import { postFavorite } from "../redux/ActionCreators";
+import { postFavorite, postComment } from "../redux/ActionCreators";
 
 const mapStateToProps = state => {
     return {
@@ -14,7 +14,8 @@ const mapStateToProps = state => {
 };
 
 const mapDistpatchToProps = {
-    postFavorite: campsiteId => (postFavorite(campsiteId))
+    postFavorite: campsiteId => (postFavorite(campsiteId)),
+    postComment: (campsiteId, rating, author, text) => (postComment(campsiteId, rating, author, text))
 };
 
 function RenderComments({comments}) {
@@ -102,8 +103,8 @@ class CampsiteInfo extends Component {
     }
 
     handleComment(campsiteId) {
-        console.log(JSON.stringify(this.state));
         this.toggleModal();
+        this.props.postComment(campsiteId, this.state.rating, this.state.author, this.state.text);
     }
 
     resetForm() {
@@ -153,7 +154,7 @@ class CampsiteInfo extends Component {
                             placeholder="Author"
                             leftIcon={{ type: 'font-awesome', name: 'user-o' }}
                             leftIconContainerStyle={{paddingRight: 10}}
-                            onChangeText={(authname)=>this.setState({author: authname})}
+                            onChangeText={(author)=>this.setState({author: author})}
                             value={this.state.author}
                         />
                         <Input 
@@ -167,7 +168,7 @@ class CampsiteInfo extends Component {
                             <Button
                             title="Submit"
                             color="#5637DD"
-                            onPress={(campsiteId) => {
+                            onPress={() => {
                                 this.handleComment(campsiteId);
                                 this.resetForm();
                             }}
