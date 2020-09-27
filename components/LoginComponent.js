@@ -7,6 +7,8 @@ import * as Permissions from "expo-permissions";
 import { createBottomTabNavigator } from "react-navigation"
 import { baseUrl } from "../shared/baseUrl";
 import * as ImageManipulator from "expo-image-manipulator";
+import * as MediaLibrary from 'expo-media-library';
+
 
 class LoginTab extends Component {
 
@@ -155,10 +157,11 @@ class RegisterTab extends Component {
             });
             if (!capturedImage.cancelled)   {
                 console.log(capturedImage);
-                this.processImage(capturedImage.uri)
+                this.processImage(capturedImage.uri);
+                MediaLibrary.createAssetAsync(capturedImage.uri);
             }
         }
-        CameraRoll.saveToCameraRoll(this.state.imgUri);
+        
     }
 
     getImageFromGallery = async () => {
