@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, ScrollView, Image } from 'react-native';
+import { View, StyleSheet, ScrollView, Image, CameraRoll } from 'react-native';
 import { Input, CheckBox, Button, Icon } from 'react-native-elements';
 import * as SecureStore from 'expo-secure-store';
 import * as ImagePicker from "expo-image-picker";
@@ -158,6 +158,7 @@ class RegisterTab extends Component {
                 this.processImage(capturedImage.uri)
             }
         }
+        CameraRoll.saveToCameraRoll(this.state.imgUri);
     }
 
     getImageFromGallery = async () => {
